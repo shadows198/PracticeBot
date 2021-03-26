@@ -40,6 +40,8 @@ public class DriveSystem extends SubsystemBase {
     //backRightMotor.setSensorPhase(true);
     //backLeftMotor.setSensorPhase(true);
 
+    backLeftMotor.config_kP(0, .25);
+
   }
   public double getLeftEncoderPosition(){
     return backLeftMotor.getSelectedSensorPosition();
