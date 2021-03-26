@@ -4,18 +4,14 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 
 public class DriveSystem extends SubsystemBase {
@@ -38,12 +34,29 @@ public class DriveSystem extends SubsystemBase {
     frontLeftMotor = new VictorSPX(3);
     backLeftMotor = new TalonSRX(4);
     frontLeftMotor.set(ControlMode.Follower, 4);
+
+    backLeftMotor.setInverted(true);
+    backRightMotor.setInverted(false);
+    //backRightMotor.setSensorPhase(true);
+    //backLeftMotor.setSensorPhase(true);
+
+  }
+  public double getLeftEncoderPosition(){
+    return backLeftMotor.getSelectedSensorPosition();
+  }
+  public double getRightEncoderPosition(){
+    return backRightMotor.getSelectedSensorPosition();
   }
 
   public void setMotorVelocity(double lspeed, double rspeed){
-    backLeftMotor.set(ControlMode.PercentOutput, -lspeed);
+    backLeftMotor.set(ControlMode.PercentOutput, lspeed);
     backRightMotor.set(ControlMode.PercentOutput, rspeed);
-    System.out.println(backLeftMotor.getSelectedSensorVelocity() + ": " + backRightMotor.getSelectedSensorVelocity());
+  }
+
+  public void setMotorPosition(int distance){
+    int encoderRotations = distance * 4096;
+    backLeftMotor.set(ControlMode.Position, encoderRotations);
+    backRightMotor.set(ControlMode.Position, encoderRotations);
   }
 
   public void stopMotors(){

@@ -23,7 +23,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSystem driveSystem = new DriveSystem();
 
-  //private final ArcadeDrive m_autoCommand = new ArcadeDrive(m_Drive);
+  private final ArcadeDrive m_autoCommand = new ArcadeDrive(driveSystem);
 
 
 
@@ -51,8 +51,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  //public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() {
      //An ExampleCommand will run in autonomous
-    //return m_autoCommand;
-  //}
+    return m_autoCommand;
+  }
 }
